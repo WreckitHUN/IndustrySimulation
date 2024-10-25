@@ -1,0 +1,46 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background: grey;
+}
+
+.lamp{
+    width: 25px;
+    height: 25px;
+    background: lightcoral;
+    border-radius: 50%;
+    border: 2px solid;
+}
+
+.lamp.on{
+    background: red; 
+}
+
+.container{
+    position: relative;
+    width: 100%;
+}
+
+#enable{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    border-radius: 20px;
+    background: white;
+}
+
+#enable.on{
+    background: green;
+}
+
+canvas {
+    background: white;
+    border: 1px solid;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
