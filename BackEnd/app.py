@@ -6,12 +6,12 @@ local = '127.0.0.1'
 PLC = '192.168.0.1'
 
 app = Flask(__name__)
-client = ModbusTcpClient(host=local)
+# client = ModbusTcpClient(host=local)
 
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return ""
 
 
 @app.route('/inputs', methods=["POST", "OPTIONS"])
