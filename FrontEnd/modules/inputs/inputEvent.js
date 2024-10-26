@@ -1,6 +1,6 @@
-import eventBus from "./eventBus.js";
+import eventBus from "../eventBus.js";
 
-function createInput(type, address, value = 0) {
+export default function createInput(type, address, value = 0) {
   return {
     type,
     address,
@@ -8,10 +8,9 @@ function createInput(type, address, value = 0) {
   };
 }
 
-const I0 = createInput("I", 0, 0);
-const I1 = createInput("I", 1, 0);
+eventBus.create("changeInput", changeInput);
 
-eventBus.create("changeInput", async (event) => {
+async function changeInput(event) {
   // event.detail is an object {type: I or Q, address: 0, value: 0 or 1}
   const input = event.detail;
   try {
@@ -35,18 +34,4 @@ eventBus.create("changeInput", async (event) => {
   } catch (error) {
     console.error("Error:", error);
   }
-});
-
-document.querySelector("#I0").addEventListener("mousedown", () => {
-  I0.value = 1;
-  I1.value = 1;
-  eventBus.emit("changeInput", I0);
-  eventBus.emit("changeInput", I1);
-});
-
-document.querySelector("#I0").addEventListener("mouseup", () => {
-  I0.value = 0;
-  I1.value = 0;
-  eventBus.emit("changeInput", I0);
-  eventBus.emit("changeInput", I1);
-});
+}
