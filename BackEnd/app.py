@@ -3,10 +3,10 @@ from pymodbus.client import ModbusTcpClient
 
 # Server's IP port is default 502
 local = '127.0.0.1'
-PLC = '192.168.0.1'
+PLC = '192.168.1.212'
 
 app = Flask(__name__)
-# client = ModbusTcpClient(host=local)
+client = ModbusTcpClient(host=PLC)
 
 
 @app.route('/')
@@ -14,17 +14,24 @@ def index():
     return ""
 
 
-@app.route('/inputs', methods=["POST", "OPTIONS"])
+@app.route('/input', methods=["POST", "OPTIONS"])
 def handle_inputs():
     # CORS
     if request.method == "OPTIONS":
         return _build_cors_preflight_response()
     # CORS
     data = request.get_json()
-    inputs = data["inputs"]
-    print(inputs)
-    # Write multiple coils
-    # client.write_coils(address=0, values=inputs)
+    """
+    {
+    type: I or Q,
+    address: 0 ... 7,
+    value: 0 or 1,
+    }"""
+    print(data)
+    address = data["address"]
+    value = data["value"]
+    # Write coil
+    client.write_coil(address=address, value=value)
     # CORS
     response = jsonify(["OK"])
     response.headers.add("Access-Control-Allow-Origin", "*")
