@@ -19,7 +19,7 @@ function EventBus(description = "") {
 
   // Function to emit an event
   const emit = (type, detail = undefined) => {
-    return eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
+    eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
   };
 
   return {

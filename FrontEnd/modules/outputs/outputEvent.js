@@ -1,50 +1,51 @@
 import eventBus from "../eventBus.js";
-
 let pollingTime = 50;
-
-const outputsController = createOutputsController();
-// Outputs
-// Lamps
-const lamp0 = document.querySelector("#Q0");
-
+const presentOutputs = createOutputsController();
 eventBus.create("readOutputs", readOutputs);
+// Polling for outputs at the specified interval
+setInterval(() => {
+  eventBus.emit("readOutputs");
+}, pollingTime);
 
 // Read outputs from Modbus device (PLC)
 async function readOutputs() {
   try {
     const response = await fetch("http://127.0.0.1:8000/outputs");
-    const newOutputs = await response.json(); //[false, false, false, ...]
-    // For now I don't use the outputsController since I don't exactly know how to make
-    // this code modular, but it will be a future update. For now I hard code my outputs.
-    // Q0
-    if (newOutputs[0]) {
-      lamp0.classList.add("on");
-    } else {
-      lamp0.classList.remove("on");
-    }
+    const futureOutputs = await response.json(); // [true, false, false, ...]
+    emitOutputSignals(futureOutputs);
   } catch (error) {
     console.error("Error:", error);
   }
 }
-setInterval(() => {
-  eventBus.emit("readOutputs");
-}, pollingTime);
+
+function emitOutputSignals(futureOutputs) {
+  // Iterate over the outputs and emit the correct signal if there was a change
+  futureOutputs.forEach((value, i) => {
+    // Check if the value has changed
+    if (value === presentOutputs.getOutput(i)) return; // No change, so just continue
+    // Emit the appropriate event based on the value
+    if (value) {
+      eventBus.emit(`Q${i}on`); // Emit "on" event if the value is true
+    } else {
+      eventBus.emit(`Q${i}off`); // Emit "off" event if the value is false
+    }
+    // Update the presentOutputs with the new value
+    presentOutputs.setOutput(value, i);
+  });
+}
 
 // TO DO to make this more modular
 function createOutputsController() {
   let outputs = Array(8).fill(false);
 
-  const setOutputs = (newOutputs) => {
-    outputs = newOutputs;
+  const setOutput = (newOutput, index) => {
+    outputs[index] = newOutput;
   };
 
-  const getOutputs = () => outputs;
-
-  const isOn = (address) => outputs[address];
+  const getOutput = (index) => outputs[index];
 
   return {
-    setOutputs,
-    getOutputs,
-    isOn,
+    setOutput,
+    getOutput,
   };
 }

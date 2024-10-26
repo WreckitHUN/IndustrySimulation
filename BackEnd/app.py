@@ -6,7 +6,7 @@ local = '127.0.0.1'
 PLC = '192.168.1.212'
 
 app = Flask(__name__)
-client = ModbusTcpClient(host=PLC)
+client = ModbusTcpClient(host=local)
 
 
 @app.route('/')
