@@ -1,46 +1,61 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
-body{
-    background: grey;
+body {
+  background: grey;
 }
 
-.lamp{
-    width: 25px;
-    height: 25px;
-    background: lightcoral;
-    border-radius: 50%;
-    border: 2px solid;
+.lamp {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid;
 }
 
-.lamp.on{
-    background: red; 
+.lamp.red {
+  background: lightcoral;
+}
+.lamp.yellow {
+  background: lightgoldenrodyellow;
+}
+.lamp.green {
+  background: lightgreen;
 }
 
-.container{
-    position: relative;
-    width: 100%;
+.lamp.red.on {
+  background: red;
+}
+.lamp.yellow.on {
+  background: rgb(255, 179, 0);
+}
+.lamp.green.on {
+  background: green;
 }
 
-#enable{
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
-    border-radius: 20px;
-    background: white;
+.container {
+  position: relative;
+  width: 100%;
 }
 
-#enable.on{
-    background: green;
+#enable {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  border-radius: 20px;
+  background: white;
+}
+
+#enable.on {
+  background: green;
 }
 
 canvas {
-    background: white;
-    border: 1px solid;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 0);
+  background: white;
+  border: 1px solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
