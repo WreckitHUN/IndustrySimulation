@@ -1,6 +1,16 @@
-/* HTML comments are notes for developers and don’t affect the
- page’s functionality. However, they are still part of the DOM as 
- nodes with a Comment interface, inheriting from Node. */
+// Enable button to enable/disable signal emit
+let enable = false;
+const enableButton = document.querySelector("#enable");
+
+enableButton.addEventListener("click", () => {
+  enable = !enable;
+
+  if (enable) {
+    enableButton.classList.add("on");
+  } else {
+    enableButton.classList.remove("on");
+  }
+});
 
 // Function to create an EventBus
 function EventBus(description = "") {
@@ -19,10 +29,12 @@ function EventBus(description = "") {
 
   // Function to emit an event
   const emit = (type, detail = undefined) => {
+    if (!enable) return;
     eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
   };
 
   return {
+    clientAccessPoint: "http://127.0.0.1:8000",
     create,
     remove,
     emit,

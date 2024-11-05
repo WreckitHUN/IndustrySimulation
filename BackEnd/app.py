@@ -7,6 +7,7 @@ PLC = '192.168.1.212'
 
 app = Flask(__name__)
 client = ModbusTcpClient(host=local)
+client.connect()
 
 
 @app.route('/')
@@ -18,12 +19,11 @@ def index():
 def handle_inputs():
     # CORS
     if request.method == "OPTIONS":
-        return _build_cors_preflight_response()
+        return build_cors_preflight_response()
     # CORS
     data = request.get_json()
     """
     {
-    type: I or Q,
     address: 0 ... 7,
     value: 0 or 1,
     }"""
@@ -42,14 +42,14 @@ def handle_inputs():
 def handle_outputs():
     # CORS
     if request.method == "OPTIONS":
-        return _build_cors_preflight_response()
+        return build_cors_preflight_response()
     # CORS
     response = jsonify(client.read_discrete_inputs(address=0, count=8).bits)
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
 
-def _build_cors_preflight_response():
+def build_cors_preflight_response():
     response = make_response()
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add('Access-Control-Allow-Headers', "*")

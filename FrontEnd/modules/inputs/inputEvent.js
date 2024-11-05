@@ -13,7 +13,7 @@ async function changeInput(event) {
   // event.detail is an object {address: 0, value: 0 or 1}
   const input = event.detail;
   try {
-    const response = await fetch("http://127.0.0.1:8000/input", {
+    const response = await fetch(`${eventBus.clientAccessPoint}/input`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
