@@ -6,6 +6,7 @@ local = '127.0.0.1'
 PLC = '192.168.1.212'
 
 enabled = False
+bitCount = 1
 
 app = Flask(__name__)
 client = ModbusTcpClient(host=local)
@@ -68,7 +69,12 @@ def handle_outputs():
     if request.method == "OPTIONS":
         return build_cors_preflight_response()
     # CORS
-    response = jsonify(client.read_discrete_inputs(address=0, count=8).bits)
+    # Check if the connection is still a on
+    modbusResponse = client.read_discrete_inputs(address=0, count=bitCount * 8)
+    if hasattr(modbusResponse, "bits"):
+        response = jsonify(modbusResponse.bits)
+    else:
+        response = jsonify("disconnected")
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 

@@ -1,5 +1,5 @@
-// Client address to connect to
 let clientAccessPoint = "http://127.0.0.1:8000";
+const eventBus = EventBus("EventBus");
 // Enable button to enable/disable signal emit and connection
 let enable = false;
 const enableButton = document.querySelector("#enable");
@@ -26,8 +26,10 @@ enableButton.addEventListener("click", async () => {
 
   if (enable) {
     enableButton.classList.add("on");
+    eventBus.emit("enabled");
   } else {
     enableButton.classList.remove("on");
+    eventBus.emit("disabled");
   }
 });
 
@@ -48,7 +50,6 @@ function EventBus(description = "") {
 
   // Function to emit an event
   const emit = (type, detail = undefined) => {
-    if (!enable) return;
     eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
   };
 
@@ -59,7 +60,5 @@ function EventBus(description = "") {
     emit,
   };
 }
-
-const eventBus = EventBus("EventBus");
 
 export default eventBus;

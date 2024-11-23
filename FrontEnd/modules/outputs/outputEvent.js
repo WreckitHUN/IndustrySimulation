@@ -1,19 +1,32 @@
 import eventBus from "../eventBus.js";
 
+let interval0;
 let pollingTime = 50;
 const presentOutputs = createOutputs();
 
 eventBus.create("readOutputs", readOutputs);
 // Polling for outputs at the specified interval
-setInterval(() => {
-  eventBus.emit("readOutputs");
-}, pollingTime);
+eventBus.create("enabled", () => {
+  interval0 = setInterval(() => {
+    eventBus.emit("readOutputs");
+  }, pollingTime);
+});
+
+eventBus.create("disabled", () => {
+  clearInterval(interval0);
+});
 
 // Read outputs from Modbus device (PLC) via FLASK app
 async function readOutputs() {
+  console.log("A");
+
   try {
     const response = await fetch(`${eventBus.clientAccessPoint}/outputs`);
-    const futureOutputs = await response.json(); // [true, false, false, ...]
+    const futureOutputs = await response.json(); // [true, false, false, ...] or disconnected
+    if (futureOutputs === "disconnected") {
+      eventBus.emit("disabled");
+      return;
+    }
     emitOutputSignals(futureOutputs);
   } catch (error) {
     console.error("Error:", error);
