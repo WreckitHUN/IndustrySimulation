@@ -5,14 +5,38 @@ from pymodbus.client import ModbusTcpClient
 local = '127.0.0.1'
 PLC = '192.168.1.212'
 
+enabled = False
+
 app = Flask(__name__)
 client = ModbusTcpClient(host=local)
-client.connect()
 
 
 @app.route('/')
 def index():
     return ""
+
+
+@app.route('/enable', methods=["POST", "OPTIONS"])
+def connect():
+    global enabled
+    # CORS
+    if request.method == "OPTIONS":
+        return build_cors_preflight_response()
+    # CORS
+    data = request.get_json()
+    # Connect/Disconnect
+    enabled = bool(data)
+    if enabled:
+        result = client.connect()
+        # Return if the connection is successful or not
+        response = jsonify(result)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+    else:
+        client.close()
+        response = jsonify(0)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
 
 
 @app.route('/input', methods=["POST", "OPTIONS"])

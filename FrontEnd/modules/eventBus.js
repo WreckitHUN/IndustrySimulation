@@ -1,9 +1,28 @@
-// Enable button to enable/disable signal emit
+// Client address to connect to
+let clientAccessPoint = "http://127.0.0.1:8000";
+// Enable button to enable/disable signal emit and connection
 let enable = false;
 const enableButton = document.querySelector("#enable");
+// On clicking the enableButton send 0 or 1 to the backend and
+// based on the receivedData enable/disable the process
+enableButton.addEventListener("click", async () => {
+  try {
+    const response = await fetch(`${clientAccessPoint}/enable`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(enable ? 0 : 1),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-enableButton.addEventListener("click", () => {
-  enable = !enable;
+    const receivedData = await response.json();
+    enable = receivedData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
 
   if (enable) {
     enableButton.classList.add("on");
@@ -34,7 +53,7 @@ function EventBus(description = "") {
   };
 
   return {
-    clientAccessPoint: "http://127.0.0.1:8000",
+    clientAccessPoint,
     create,
     remove,
     emit,
