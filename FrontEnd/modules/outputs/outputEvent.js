@@ -18,13 +18,10 @@ eventBus.create("disabled", () => {
 
 // Read outputs from Modbus device (PLC) via FLASK app
 async function readOutputs() {
-  console.log("A");
-
   try {
     const response = await fetch(`${eventBus.clientAccessPoint}/outputs`);
     const futureOutputs = await response.json(); // [true, false, false, ...] or disconnected
     if (futureOutputs === "disconnected") {
-      eventBus.emit("disabled");
       return;
     }
     emitOutputSignals(futureOutputs);
