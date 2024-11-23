@@ -8,8 +8,12 @@
     <script type="module" src="modules/inputs/inputEvent.js" defer></script>
     <script type="module" src="modules/inputs/inputs.js" defer></script>
     <script type="module" src="modules/outputs/outputEvent.js" defer></script>
-    <script type="module" src="modules/outputs/outputs.js" defer></script>
     <script type="module" src="modules/canvas/canvas.js" defer></script>
+    <script
+      type="module"
+      src="modules/canvas/conveyor/conveyor.js"
+      defer
+    ></script>
 
     <title>Control Panel</title>
   </head>
@@ -17,10 +21,10 @@
     <div class="container">
       <button class="btn" id="enable">Enable</button>
       <button class="btn" id="I0" name="I0">I0</button>
-      <div class="lamp red" id="Q0" name="Q0"></div>
-      <div class="lamp yellow" id="Q1" name="Q1"></div>
-      <div class="lamp green" id="Q2" name="Q2"></div>
-      <canvas id="canvas" ></canvas>
+      <button class="btn" id="I1" name="I1">I1</button>
+      <button class="btn" id="I2" name="I2">I2</button>
+
+      <canvas id="canvas"></canvas>
     </div>
   </body>
 </html>
