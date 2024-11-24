@@ -12,6 +12,11 @@ const rotates = {
   rotate2: 0,
 };
 
+const extend = {
+  extended1: false,
+  extended2: false,
+};
+
 export default function directorController(ctx, directorImage) {
   // director positions
   updatePosition(1);
@@ -53,7 +58,18 @@ function updatePosition(num) {
       rotates[`rotate${num}`] -= speed;
       break;
   }
-
   // Make sure the rotate is between 0 and 45
   rotates[`rotate${num}`] = Math.max(0, Math.min(45, rotates[`rotate${num}`]));
+  // Emit a signal when fully open also when closed
+  if (rotates[`rotate${num}`] >= 45) {
+    // If already extended return
+    if (extend[`extended${num}`]) return;
+    eventBus.emit(`rotate${num}extended`);
+    extend[`extended${num}`] = true;
+  } else {
+    // If already retracted return
+    if (!extend[`extended${num}`]) return;
+    eventBus.emit(`rotate${num}retracted`);
+    extend[`extended${num}`] = false;
+  }
 }

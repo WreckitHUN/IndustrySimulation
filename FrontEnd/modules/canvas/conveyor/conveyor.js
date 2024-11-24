@@ -4,7 +4,7 @@ let posX = 1000;
 let state = "stop"; // Initial state
 let speed = 1;
 
-export default function conveyorController(ctx, conveyorImage, output) {
+export default function conveyorController(ctx, conveyorImage) {
   // Conveyor position
   updatePosition();
   // Draw the conveyor
@@ -33,11 +33,13 @@ function updatePosition() {
   switch (state) {
     case "forward":
       posX -= speed;
+      eventBus.emit("conveyorOn");
       break;
     case "backward":
       posX += speed;
       break;
     case "stop":
+      eventBus.emit("conveyorOff");
       // DO NOTHING
       break;
   }
