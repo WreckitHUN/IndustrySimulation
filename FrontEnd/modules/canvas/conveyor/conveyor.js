@@ -4,7 +4,7 @@ let posX = 1000;
 let state = "stop"; // Initial state
 let speed = 1;
 
-export default function conveyorController(ctx, conveyorImage) {
+export default function conveyorController(ctx, conveyorImage, output) {
   // Conveyor position
   updatePosition();
   // Draw the conveyor
@@ -19,11 +19,6 @@ export default function conveyorController(ctx, conveyorImage) {
     1000,
     conveyorImage.height
   );
-
-  // Request the animation frame
-  requestAnimationFrame(() => {
-    conveyorController(ctx, conveyorImage);
-  });
 }
 
 // Connect to the output Q0
