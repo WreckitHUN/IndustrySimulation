@@ -1,5 +1,15 @@
 import eventBus from "../eventBus.js";
 
+let enabled = false;
+
+eventBus.create("enabled", () => {
+  enabled = true;
+});
+
+eventBus.create("disabled", () => {
+  enabled = false;
+});
+
 export default function createInput(address, value = 0) {
   return {
     address,
@@ -10,6 +20,7 @@ export default function createInput(address, value = 0) {
 eventBus.create("changeInput", changeInput);
 
 async function changeInput(event) {
+  if (!enabled) return;
   // event.detail is an object {address: 0, value: 0 or 1}
   const input = event.detail;
   try {
@@ -25,7 +36,6 @@ async function changeInput(event) {
     }
 
     const receivedData = await response.json();
-    console.log(receivedData);
   } catch (error) {
     console.error("Error:", error);
   }

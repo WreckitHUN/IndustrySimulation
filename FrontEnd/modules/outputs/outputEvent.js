@@ -5,13 +5,14 @@ let pollingTime = 50;
 const presentOutputs = createOutputs();
 
 eventBus.create("readOutputs", readOutputs);
-// Polling for outputs at the specified interval
+// Polling for outputs at the specified interval if enabled
 eventBus.create("enabled", () => {
   interval0 = setInterval(() => {
     eventBus.emit("readOutputs");
   }, pollingTime);
 });
 
+// Clear the polling when disabled
 eventBus.create("disabled", () => {
   clearInterval(interval0);
 });
