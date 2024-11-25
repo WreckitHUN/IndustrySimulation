@@ -3,13 +3,14 @@ from pymodbus.client import ModbusTcpClient
 
 # Server's IP port is default 502
 local = '127.0.0.1'
-PLC = '192.168.1.212'
+PLC = '192.168.0.1'
 
+offset = 16  # For SIEMENS it is 16 for CODESYS SOFT PLC it is 0
 enabled = False
-bitCount = 1
+byteCount = 1
 
 app = Flask(__name__)
-client = ModbusTcpClient(host=local)
+client = ModbusTcpClient(host=PLC)
 
 
 @app.route('/')
@@ -56,7 +57,7 @@ def handle_inputs():
     address = data["address"]
     value = data["value"]
     # Write coil
-    client.write_coil(address=address, value=value)
+    client.write_coil(address=address + offset, value=value)
     # CORS
     response = jsonify(["OK"])
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -70,7 +71,8 @@ def handle_outputs():
         return build_cors_preflight_response()
     # CORS
     # Check if the connection is still a on
-    modbusResponse = client.read_discrete_inputs(address=0, count=bitCount * 8)
+    modbusResponse = client.read_discrete_inputs(
+        address=0 + offset, count=byteCount * 8)
     if hasattr(modbusResponse, "bits"):
         response = jsonify(modbusResponse.bits)
     else:
