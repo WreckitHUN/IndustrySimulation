@@ -104,8 +104,6 @@ function updatePosition(workpiece) {
   // If the workpiece has moved to the bin, let it slide down
   if (y <= 275) {
     y -= speed;
-<<<<<<< HEAD
-=======
     switch (true) {
       case x >= 302 && x <= 460: // bin1
         // The workpiece is getting into bin1
@@ -122,16 +120,11 @@ function updatePosition(workpiece) {
     }
     console.log(x);
   } else if (conveyorOn) {
->>>>>>> 0e3427130a3ac28615f03c9e14908e175c7a852b
     // If conveyor is on, move forward
   } else if (conveyorOn) {
     x += speed;
-<<<<<<< HEAD
-    // If the workpiece is right before the bin1 and director1 is extended
-=======
 
     // If the workpiece is right before bin1 and director1 is extended
->>>>>>> 0e3427130a3ac28615f03c9e14908e175c7a852b
     if (x >= 302 && x <= 460 && rotate1extended) {
       y -= speed; // Move the workpiece up
       if (x > 386) x = 386;
