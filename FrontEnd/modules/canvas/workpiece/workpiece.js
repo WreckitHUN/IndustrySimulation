@@ -100,7 +100,6 @@ export default function workpieceController(
 
 function updatePosition(workpiece) {
   let [x, y] = workpiece.getPosition();
-
   // If the workpiece has moved to the bin, let it slide down
   if (y <= 275) {
     y -= speed;
@@ -108,6 +107,7 @@ function updatePosition(workpiece) {
       case x >= 302 && x <= 460: // bin1
         // The workpiece is getting into bin1
         binController("bin1", workpiece, y);
+
         break;
       case x >= 552 && x <= 705: // bin2
         // The workpiece is getting into bin2
@@ -118,9 +118,6 @@ function updatePosition(workpiece) {
         binController("bin3", workpiece, y);
         break;
     }
-    console.log(x);
-  } else if (conveyorOn) {
-    // If conveyor is on, move forward
   } else if (conveyorOn) {
     x += speed;
 
