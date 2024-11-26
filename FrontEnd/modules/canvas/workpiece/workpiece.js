@@ -3,6 +3,7 @@ import eventBus from "../../eventBus.js";
 let disabled = false;
 // Conveyor speed
 let speed = 1;
+let posYminValue = 0;
 // Variables for the directors and the conveyor
 let conveyorOn = false;
 let rotate1extended = false;
@@ -36,9 +37,11 @@ const aluButton = document.querySelector("#alu");
 // Create empty array for the workpieces on the system
 let workpieces = [];
 // Workpiece counter for each collector bin
-let binCounter1 = 0;
-let binCounter2 = 0;
-let binCounter3 = 0;
+let binCounters = {
+  bin1: 0,
+  bin2: 0,
+  bin3: 0,
+};
 
 // Create the workpiece and add it to the array
 function instantiateWorkpiece(type) {
@@ -101,15 +104,51 @@ function updatePosition(workpiece) {
   // If the workpiece has moved to the bin, let it slide down
   if (y <= 275) {
     y -= speed;
+<<<<<<< HEAD
+=======
+    switch (true) {
+      case x >= 302 && x <= 460: // bin1
+        // The workpiece is getting into bin1
+        binController("bin1", workpiece, y);
+        break;
+      case x >= 552 && x <= 705: // bin2
+        // The workpiece is getting into bin2
+        binController("bin2", workpiece, y);
+        break;
+      case x >= 805 && x <= 974: // bin3
+        // The workpiece is getting into bin3
+        binController("bin3", workpiece, y);
+        break;
+    }
+    console.log(x);
+  } else if (conveyorOn) {
+>>>>>>> 0e3427130a3ac28615f03c9e14908e175c7a852b
     // If conveyor is on, move forward
   } else if (conveyorOn) {
     x += speed;
+<<<<<<< HEAD
     // If the workpiece is right before the bin1 and director1 is extended
+=======
+
+    // If the workpiece is right before bin1 and director1 is extended
+>>>>>>> 0e3427130a3ac28615f03c9e14908e175c7a852b
     if (x >= 302 && x <= 460 && rotate1extended) {
       y -= speed; // Move the workpiece up
+      if (x > 386) x = 386;
+    }
+    // If the workpiece is right before bin2 and director2 is extended
+    else if (x >= 552 && x <= 705 && rotate2extended) {
+      y -= speed; // Move the workpiece up
+      if (x > 636) x = 636;
+    }
+    // If the workpiece is right before bin3
+    else if (x >= 805) {
+      y -= speed; // Move the workpiece up
+      if (x > 889) x = 889;
     }
   }
-
+  // Don't let the workpiece pass the min y
+  if (y < posYminValue) y = posYminValue;
   // Update the workpiece position
   workpiece.setPosition([x, y]);
 }
@@ -118,9 +157,11 @@ function updatePosition(workpiece) {
 function createWorkpiece(type) {
   const _type = type; // red, black, alu
   let posX = 0;
-  let posY = 360; // Position of the conveyor
+  let posY = 360; // Position of the conveyor on the Y axis
+  let enabled = true;
 
   return {
+    enabled,
     getType: () => _type,
     getPosition: () => [posX, posY],
     setPosition: ([x, y]) => {
@@ -128,4 +169,34 @@ function createWorkpiece(type) {
       posY = y;
     },
   };
+}
+
+function binController(bin, workpiece, y) {
+  // The workpiece is getting into bin1
+  switch (true) {
+    case binCounters[bin] === 0 && workpiece.enabled:
+      posYminValue = 32;
+      if (y <= posYminValue) {
+        workpiece.enabled = false;
+        binCounters[bin] += 1;
+        disabled = false;
+      }
+      break;
+    case binCounters[bin] === 1 && workpiece.enabled:
+      posYminValue = 132;
+      if (y <= posYminValue) {
+        workpiece.enabled = false;
+        binCounters[bin] += 1;
+        disabled = false;
+      }
+      break;
+    case binCounters[bin] === 2 && workpiece.enabled:
+      posYminValue = 232;
+      if (y <= posYminValue) {
+        workpiece.enabled = false;
+        binCounters[bin] += 1;
+        disabled = true;
+      }
+      break;
+  }
 }
