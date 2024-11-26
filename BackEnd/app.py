@@ -5,12 +5,12 @@ from pymodbus.client import ModbusTcpClient
 local = '127.0.0.1'
 PLC = '192.168.0.1'
 
-offset = 16  # For SIEMENS it is 16 for CODESYS SOFT PLC it is 0
+offset = 0  # For SIEMENS it is 16 for CODESYS SOFT PLC it is 0
 enabled = False
 byteCount = 1
 
 app = Flask(__name__)
-client = ModbusTcpClient(host=PLC)
+client = ModbusTcpClient(host=local)
 
 
 @app.route('/')

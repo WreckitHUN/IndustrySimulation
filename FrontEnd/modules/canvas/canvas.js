@@ -43,7 +43,7 @@ function animate() {
   // Conveyor controller
   conveyorController(ctx, conveyorImage);
   // Draw end piece
-  ctx.drawImage(endPieceImage, 860, 335);
+  ctx.drawImage(endPieceImage, 852, 335);
   // Directors controller
   directorController(ctx, directorImage);
   // Workpiece controller
