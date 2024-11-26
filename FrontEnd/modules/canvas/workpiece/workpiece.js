@@ -43,6 +43,7 @@ let binCounter3 = 0;
 // Create the workpiece and add it to the array
 function instantiateWorkpiece(type) {
   let workpiece = createWorkpiece(type);
+
   workpieces.push(workpiece);
 }
 
@@ -100,10 +101,9 @@ function updatePosition(workpiece) {
   // If the workpiece has moved to the bin, let it slide down
   if (y <= 275) {
     y -= speed;
-  } else if (conveyorOn) {
     // If conveyor is on, move forward
+  } else if (conveyorOn) {
     x += speed;
-
     // If the workpiece is right before the bin1 and director1 is extended
     if (x >= 302 && x <= 460 && rotate1extended) {
       y -= speed; // Move the workpiece up
