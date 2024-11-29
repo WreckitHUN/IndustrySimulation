@@ -101,13 +101,12 @@ export default function workpieceController(
 function updatePosition(workpiece) {
   let [x, y] = workpiece.getPosition();
   // If the workpiece has moved to the bin, let it slide down
-  if (y <= 275) {
+  if (y <= 280) {
     y -= speed;
     switch (true) {
       case x >= 302 && x <= 460: // bin1
         // The workpiece is getting into bin1
         binController("bin1", workpiece, y);
-
         break;
       case x >= 552 && x <= 705: // bin2
         // The workpiece is getting into bin2
@@ -135,6 +134,8 @@ function updatePosition(workpiece) {
     else if (x >= 805) {
       y -= speed; // Move the workpiece up
       if (x > 889) x = 889;
+    } else {
+      y = 360;
     }
   }
   // Don't let the workpiece pass the min y
