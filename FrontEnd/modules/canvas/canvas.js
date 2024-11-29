@@ -19,6 +19,9 @@ const directorImage = new Image();
 const redImage = new Image();
 const blackImage = new Image();
 const aluImage = new Image();
+const capacitiveImage = new Image();
+const opticalImage = new Image();
+const inductiveImage = new Image();
 
 // Source for the images
 bgImage.src = "./assets/project1/bg.png";
@@ -28,6 +31,9 @@ directorImage.src = "./assets/project1/rotate.png";
 redImage.src = "./assets/project1/Red.png";
 blackImage.src = "./assets/project1/Black.png";
 aluImage.src = "./assets/project1/Aluminium.png";
+capacitiveImage.src = "./assets/project1/Capacitive.png";
+opticalImage.src = "./assets/project1/Optical.png";
+inductiveImage.src = "./assets/project1/Inductive.png";
 
 // When everything is loaded do the animation
 window.onload = () => {
@@ -48,6 +54,7 @@ function animate() {
   directorController(ctx, directorImage);
   // Workpiece controller
   workpieceController(ctx, redImage, blackImage, aluImage);
+  // Sensors controller
 
   requestAnimationFrame(animate);
 }
