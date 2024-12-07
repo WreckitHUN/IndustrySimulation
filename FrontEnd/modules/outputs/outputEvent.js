@@ -15,6 +15,8 @@ eventBus.create("enabled", () => {
 // Clear the polling when disabled
 eventBus.create("disabled", () => {
   clearInterval(interval0);
+  // Make all outputs false if connection is disabled
+  emitOutputSignals(Array(8).fill(false));
 });
 
 // Read outputs from Modbus device (PLC) via FLASK app

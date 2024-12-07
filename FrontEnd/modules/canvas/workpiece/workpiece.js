@@ -1,32 +1,19 @@
 import eventBus from "../../eventBus.js";
+import { extend } from "../director/director.js";
 // Let only one workpiece to move
 let disabled = false;
 // Conveyor speed
 let speed = 1;
 let posYminValue = 0;
-// Variables for the directors and the conveyor
+// Variables for the conveyor
 let conveyorOn = false;
-let rotate1extended = false;
-let rotate2extended = false;
 
-// Add eventlistener to know the state of directors and conveyor
+// Add eventlistener to know the state of conveyor
 eventBus.create("conveyorOn", () => {
   conveyorOn = true;
 });
 eventBus.create("conveyorOff", () => {
   conveyorOn = false;
-});
-eventBus.create("rotate1extended", () => {
-  rotate1extended = true;
-});
-eventBus.create("rotate1retracted", () => {
-  rotate1extended = false;
-});
-eventBus.create("rotate2extended", () => {
-  rotate2extended = true;
-});
-eventBus.create("rotate2retracted", () => {
-  rotate2extended = false;
 });
 
 // Buttons for adding a workpiece
@@ -35,7 +22,7 @@ const blackButton = document.querySelector("#black");
 const aluButton = document.querySelector("#alu");
 
 // Create empty array for the workpieces on the system
-let workpieces = [];
+export let workpieces = [];
 // Workpiece counter for each collector bin
 let binCounters = {
   bin1: 0,
@@ -121,12 +108,12 @@ function updatePosition(workpiece) {
     x += speed;
 
     // If the workpiece is right before bin1 and director1 is extended
-    if (x >= 302 && x <= 460 && rotate1extended) {
+    if (x >= 302 && x <= 460 && extend["extended1"]) {
       y -= speed; // Move the workpiece up
       if (x > 386) x = 386;
     }
     // If the workpiece is right before bin2 and director2 is extended
-    else if (x >= 552 && x <= 705 && rotate2extended) {
+    else if (x >= 552 && x <= 705 && extend["extended2"]) {
       y -= speed; // Move the workpiece up
       if (x > 636) x = 636;
     }

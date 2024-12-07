@@ -5,7 +5,7 @@ from pymodbus.client import ModbusTcpClient
 local = '127.0.0.1'
 PLC = '192.168.0.1'
 
-offset = 0  # For SIEMENS it is 16 for CODESYS SOFT PLC it is 0
+offset = 0  # For SIEMENS and OPENPLC it is 16 for CODESYS SOFT PLC it is 0
 enabled = False
 byteCount = 1
 

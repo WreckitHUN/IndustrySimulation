@@ -1,4 +1,5 @@
 import eventBus from "../../eventBus.js";
+import { inputs } from "../../inputs/inputs.js";
 
 let speed = 5;
 
@@ -12,10 +13,32 @@ const rotates = {
   rotate2: 0,
 };
 
-const extend = {
+export const extend = {
   extended1: false,
   extended2: false,
 };
+
+// Assigning I1 to director1 and and I3 to director3
+eventBus.create("rotate1extended", () => {
+  extend["extended1"] = true;
+  inputs[1].value = 1;
+  eventBus.emit("changeInput", inputs[1]);
+});
+eventBus.create("rotate1retracted", () => {
+  extend["extended1"] = false;
+  inputs[1].value = 0;
+  eventBus.emit("changeInput", inputs[1]);
+});
+eventBus.create("rotate2extended", () => {
+  extend["extended2"] = true;
+  inputs[3].value = 1;
+  eventBus.emit("changeInput", inputs[3]);
+});
+eventBus.create("rotate2retracted", () => {
+  extend["extended2"] = false;
+  inputs[3].value = 0;
+  eventBus.emit("changeInput", inputs[3]);
+});
 
 export default function directorController(ctx, directorImage) {
   // director positions

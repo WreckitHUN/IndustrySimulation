@@ -1,6 +1,7 @@
 import conveyorController from "./conveyor/conveyor.js";
 import directorController from "./director/director.js";
 import workpieceController from "./workpiece/workpiece.js";
+import sensorController from "./sensors/sensors.js";
 
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
@@ -22,6 +23,8 @@ const aluImage = new Image();
 const capacitiveImage = new Image();
 const opticalImage = new Image();
 const inductiveImage = new Image();
+const fallingSImage = new Image();
+const laserImage = new Image();
 
 // Source for the images
 bgImage.src = "./assets/project1/bg.png";
@@ -34,6 +37,8 @@ aluImage.src = "./assets/project1/Aluminium.png";
 capacitiveImage.src = "./assets/project1/Capacitive.png";
 opticalImage.src = "./assets/project1/Optical.png";
 inductiveImage.src = "./assets/project1/Inductive.png";
+fallingSImage.src = "./assets/project1/fallingS.png";
+laserImage.src = "./assets/project1/laser.png";
 
 // When everything is loaded do the animation
 window.onload = () => {
@@ -52,9 +57,17 @@ function animate() {
   ctx.drawImage(endPieceImage, 852, 335);
   // Directors controller
   directorController(ctx, directorImage);
+  // Sensors controller
+  sensorController(
+    ctx,
+    capacitiveImage,
+    opticalImage,
+    inductiveImage,
+    fallingSImage,
+    laserImage
+  );
   // Workpiece controller
   workpieceController(ctx, redImage, blackImage, aluImage);
-  // Sensors controller
 
   requestAnimationFrame(animate);
 }
