@@ -1,5 +1,5 @@
 import eventBus from "../../eventBus.js";
-import { inputs } from "../../inputs/inputs.js";
+import { inputs } from "../../inputs/inputEvent.js";
 
 let speed = 5;
 

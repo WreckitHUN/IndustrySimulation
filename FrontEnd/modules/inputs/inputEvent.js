@@ -2,11 +2,27 @@ import eventBus from "../eventBus.js";
 
 let enabled = false;
 
-eventBus.create("enabled", () => {
-  enabled = true;
+// Create the 7 inputs from 0 to 6
+export const inputs = [];
+[...Array(7)].forEach((e, i) => {
+  let input = createInput(i, 0);
+  inputs.push(input);
 });
 
+// Enable button is resetting the inputs
+eventBus.create("enabled", () => {
+  enabled = true;
+  inputs.forEach((input) => {
+    input.value = 0;
+    eventBus.emit("changeInput", input);
+  });
+});
+// Disable button is resetting the inputs
 eventBus.create("disabled", () => {
+  inputs.forEach((input) => {
+    input.value = 0;
+    eventBus.emit("changeInput", input);
+  });
   enabled = false;
 });
 

@@ -26,7 +26,7 @@ def connect():
         return build_cors_preflight_response()
     # CORS
     data = request.get_json()
-    # Connect/Disconnect
+    # Enable/Disable
     enabled = bool(data)
     if enabled:
         result = client.connect()
@@ -35,7 +35,7 @@ def connect():
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response
     else:
-        client.close()
+        # client.close()
         response = jsonify(0)
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response
