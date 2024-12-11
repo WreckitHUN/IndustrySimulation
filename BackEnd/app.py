@@ -3,14 +3,14 @@ from pymodbus.client import ModbusTcpClient
 
 # Server's IP port is default 502
 local = '127.0.0.1'
-PLC = '192.168.0.1'
+PLC = '192.168.0.186'
 
-offset = 0  # For SIEMENS and OPENPLC it is 16 for CODESYS SOFT PLC it is 0
+offset = 16  # For SIEMENS and OPENPLC it is 16 for CODESYS SOFT PLC it is 0
 enabled = False
 byteCount = 1
 
 app = Flask(__name__)
-client = ModbusTcpClient(host=local)
+client = ModbusTcpClient(host=PLC)
 
 
 @app.route('/')
