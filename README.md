@@ -8,6 +8,8 @@
 
 This project is an industry simulation that uses Python Flask for the backend and the `pymodbus` library for ModbusTCP communication. The frontend is built with HTML, CSS, and JavaScript. The simulation allows for sorting operations (based on color and material) that can be controlled with various ModbusTCP-capable devices, such as PLCs and microcontrollers.
 
+![Picture of a sorting station](http://url/to/img.png)
+
 ### Features
 
 - **Backend**: Python Flask server to handle HTTP requests and ModbusTCP communication.
@@ -38,7 +40,7 @@ To get started with the simulation, you only need to set up the backend. Follow 
    ```bash
    pip install -r requirements.txt
    ```
-5. Install Live Server extension in VS Code. After that in the FrontEnd folder just run the index.html file.
+5. Install Live Server extension in VS Code. After that in the FrontEnd folder just run the index.html file on the installed live Server.
 
 Once you've completed these steps, you'll be all set to use the simulation. Of course we still need a controlling device such as a PLC or microcontroller. The following section will guide you through setting up the project with a `CODESYS` soft PLC.
 
@@ -53,3 +55,5 @@ In the `app.py` file, you can configure the IP address for your ModbusTCP-capabl
 > **Since this project uses ModbusTCP, correct addressing is crucial. Please ensure that you set the Modbus addresses accurately to avoid any communication issues**
 
 You can configure the address offset in the `app.py` file by changing the `offset` variable from its default value of 0 to any desired bit count.
+
+**Installing CODESYS**:
