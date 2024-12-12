@@ -8,7 +8,7 @@
 
 This project is an industry simulation that uses Python Flask for the backend and the `pymodbus` library for ModbusTCP communication. The frontend is built with HTML, CSS, and JavaScript. The simulation allows for sorting operations (based on color and material) that can be controlled with various ModbusTCP-capable devices, such as PLCs and microcontrollers.
 
-![Picture of a sorting station](http://url/to/img.png)
+![Picture of a sorting station](https://github.com/WreckitHUN/IndustrySimulation/blob/main/AssetsForReadMe/Sorting.png?raw=true)
 
 ### Features
 
