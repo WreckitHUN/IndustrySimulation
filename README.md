@@ -16,7 +16,7 @@ This project is an industry simulation that uses Python Flask for the backend an
 - **Sorting Simulation**: Simulates sorting operations that can be controlled and monitored through the web interface.
 - **Device Compatibility**: The simulation itself can be programmed with different ModbusTCP-capable devices like PLCs and microcontrollers.
 
-### Installation
+### Installation and Usage
 
 To get started with the simulation, you only need to set up the backend. Follow these steps to install and configure the necessary components. A PLC demo will also be described.
 
@@ -38,8 +38,9 @@ To get started with the simulation, you only need to set up the backend. Follow 
    ```bash
    pip install -r requirements.txt
    ```
+5. Install Live Server extension in VS Code. After that in the FrontEnd folder just run the index.html file.
 
-Once you've completed these steps, you'll be all set to use the simulation. The following section will guide you through setting up the project with a `CODESYS` soft PLC.
+Once you've completed these steps, you'll be all set to use the simulation. Of course we still need a controlling device such as a PLC or microcontroller. The following section will guide you through setting up the project with a `CODESYS` soft PLC.
 
 ### CODESYS PLC demo
 
